@@ -1,0 +1,31 @@
+node{
+    def mvnhome=tool name: 'maven-3.6.3', type: 'maven'
+    stage('code checkout'){
+        git credentialsId: 'd12a0df3-5f26-45ac-9139-ba349b92cbb0', url: 'https://github.com/mano407/java-web-app-docker.git'
+    }
+    stage('build'){
+        sh "${mvnhome}/bin/mvn clean package"
+    }
+    stage('code quality ananlysis'){
+    sh "${mvnhome}/bin/mvn clean package sonar:sonar"
+    }
+    stage('artifact'){
+    sh "${mvnhome}/bin/mvn clean deploy"
+    }
+    stage('docker image'){
+        sh "docker build -t mano444/java ."
+    }
+    stage('docker push'){
+        withCredentials([string(credentialsId: 'docker_mano', variable: 'docker_mano')]) {
+        sh "docker login -u mano444 -p ${docker_mano}"
+    }
+        sh "docker push mano444/java"
+    }
+    stage('Deploy to kubernetes cluster'){
+         kubernetesDeploy(
+             configs: 'javawebapp-deployment.yml', 
+             kubeconfigId: 'kubernetes',
+             enableConfigSubstitution: true 
+             )
+    }
+}
