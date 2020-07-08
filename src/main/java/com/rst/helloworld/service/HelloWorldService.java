@@ -25,7 +25,7 @@ public class HelloWorldService {
 		if(StringUtils.isEmpty(name)){
 			return "Hello World";
 		}else{
-			return "Hello " + name;
+			return "Hello world " + name;
 		}
 		
 	}
