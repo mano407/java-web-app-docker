@@ -38,6 +38,9 @@
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
+			<formats>
+                          <format>xml</format>
+                        </formats>
 		</dependency>
 
 		<dependency>
