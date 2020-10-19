@@ -38,6 +38,9 @@
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
+			<formats>
+                          <format>xml</format>
+                        </formats>
 		</dependency>
 
 		<dependency>
@@ -126,6 +129,24 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+			<plugin>
+                          <groupId>org.codehaus.mojo</groupId>
+                          <artifactId>cobertura-maven-plugin</artifactId>
+                          <version>2.5.1</version>
+                             <configuration>
+                                <formats>
+                                   <format>xml</format>
+                                </formats>
+                                      </configuration>
+                              <executions>
+                               <execution>
+                               <phase>package</phase>
+                           <goals>
+                            <goal>cobertura</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 
